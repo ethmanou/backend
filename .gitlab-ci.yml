@@ -7,7 +7,7 @@ stages:
 before_script:
   - apt-get update
   - apt-get -y install npm nodejs
-  - npm install # Instnall dependencies before running the jobs
+  - npm install
 
 eslint:
   stage: lint

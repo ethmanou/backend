@@ -1,0 +1,27 @@
+stages:
+  - lint
+  - build
+  - deploy
+
+before_script:
+  - npm install # Instnall dependencies before running the jobs
+
+eslint:
+  stage: lint
+  script:
+    - npx eslint . # Run ESLint for linting
+
+build:
+  stage: build
+  script:
+    - npm run build # Command to build your Node.js application
+
+deploy:
+  stage: deploy
+  script:
+    - echo $AWS_ACCESS_KEY_ID > key.pem
+    - chmod 600 key.pem # Adjust path to your AWS private key
+    - ssh -i key.pem admin@13.48.138.37 "cd backend && git pull" # SSH into your server and update the app
+    - ssh -i key.pem admin@13.48.138.37 "cd backend && npm install && npm run build && pm2 start build/index.js" # Run necessary commands on the server
+  only:
+    - master # Deploy only when changes are pushed to the master branch

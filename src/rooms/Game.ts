@@ -1,5 +1,5 @@
 import { Room, Client } from "@colyseus/core";
-import { Schema, Context, type, MapSchema, filter } from "@colyseus/schema";
+import { Schema, type, filter } from "@colyseus/schema";
 
 const crypto = require("crypto")
 export class Player extends Schema
@@ -26,12 +26,12 @@ export class Player extends Schema
   @type("number") team: number;
   @type("number") score: number;
 
-  @type(["string"]) hand: String[];
-  @type("string") chosenCard: String = "";
+  @type(["string"]) hand: string[];
+  @type("string") chosenCard: string = "";
 }
 export class State extends Schema
 {
-  @filter(function(client: any, value: Player, root): boolean
+  @filter(function(client: any, value: Player): boolean
   {
     if (value == undefined)
       return false
@@ -63,14 +63,14 @@ export class State extends Schema
   {
     return false;
   })
-  @type(["string"]) deck: String[];
+  @type(["string"]) deck: string[];
 
   @type("number") teamBlueScore: number = 0;
   @type("number") teamRedScore: number = 0;
 
-  @type("string") turn: String = "";
-  @type("string") dealer: String = "";
-  @type("string") trump: String = "";
+  @type("string") turn: string = "";
+  @type("string") dealer: string = "";
+  @type("string") trump: string = "";
   @type("number") contract: number = -1;
   @type("number") fold: number = 0;
   @type("number") lock: number = 0;
@@ -109,7 +109,7 @@ export class State extends Schema
     }
   }
 
-  shuffle(array: Array<String> = [
+  shuffle(array: Array<string> = [
     "10H", "10D", "10C", "10S",
     "7H", "7D", "7C", "7S",
     "8H", "8D", "8C", "8S",
@@ -127,7 +127,7 @@ export class State extends Schema
     return array;
   }
 
-  next(dir: String)
+  next(dir: string)
   {
     if (dir === "North")
       return "East";
@@ -139,7 +139,7 @@ export class State extends Schema
       return "North";
   }
 
-  team(dir: String)
+  team(dir: string)
   {
     if (dir === "North" || dir === "South")
       return 0;
@@ -147,10 +147,10 @@ export class State extends Schema
       return 1;
   }
 
-  score(hand: String[])
+  score(hand: string[])
   {
     let score = 0;
-    for (let i in hand)
+    for (const i in hand)
     {
       if (i[1] === this.trump[1])
         score += {'A': 11, '10': 10, 'K': 4, 'Q': 3, 'J': 20, '7': 0, '8': 0, '9': 14}[i[0]];
@@ -161,10 +161,10 @@ export class State extends Schema
     return score;
   }
 
-  check(card: String, player: String)
+  check(card: string, player: string)
   {
     // @ts-ignore
-    let p = this[player];
+    const p = this[player];
 
     if (card[1] !== this.chosen[1])
     {
@@ -184,7 +184,7 @@ export class State extends Schema
 
   winner()
   {
-    let potential = [];
+    const potential = [];
     // @ts-ignore
     if (this.North.chosenCard["North"][1] == this.trump[1])
       potential.push("North");
@@ -207,7 +207,7 @@ export class State extends Schema
         }
     }
     let max = potential[0];
-    for (let i in potential)
+    for (const i in potential)
       { // @ts-ignore
         if (this.score([this[i].chosenCard]) > this.score([this[max].chosenCard]))
                 max = i;
@@ -315,7 +315,7 @@ export class Game extends Room<State>
       else
       {
         if (this.state.check(data.chosen, this.state.turn)) {
-          let tmp = {};
+          const tmp = {};
           // @ts-ignore
           tmp[this.state.turn] = data.chosen;
           this.state.chosen.push(tmp);
@@ -325,7 +325,7 @@ export class Game extends Room<State>
 
           if (this.state.chosen.length == 4)
           {
-            let winner = this.state.winner();
+            const winner = this.state.winner();
             // @ts-ignore
             this.state[winner].score += this.state.score(Object.values(this.state.chosen));
 

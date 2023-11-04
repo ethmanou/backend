@@ -26,7 +26,7 @@ deploy:
   script:
     - echo "$KEY"
     - echo "$KEY" | base64 --decode > key.pem
-    - chmod 600 $AWS_ACCESS_KEY_ID
+    - chmod 600 key.pem
     - ssh -i key.pm admin@13.48.138.37 "cd backend && git pull" # SSH into your server and update the app
     - ssh -i key.pm admin@13.48.138.37 "cd backend && npm install && npm run build && pm2 stop all && pm2 start build/index.js && pm2 save" # Run necessary commands on the server
   only:

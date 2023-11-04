@@ -164,18 +164,21 @@ export class State extends Schema
   check(card: string, player: string)
   {
     // @ts-ignore
+    if (this.chosen.length == 0)
+      return true;
+    // @ts-ignore
     const p = this[player];
-
-    if (card[1] !== this.chosen[1])
+    // @ts-ignore
+    if (card[1] != Object.values(this.chosen[0])[0][1])
     {
       // @ts-ignore
-      if (p.hand.some((x) => x[1] === this.chosen[1]))
+      if (p.hand.some((x) => x[1] == Object.values(this.chosen[0])[0][1]))
         return false;
     }
-    else if (card[1] !== this.trump[1])
+    else if (card[1] != this.trump[1])
     {
       // @ts-ignore
-      if (p.hand.some((x) => x[1] === this.trump[1]))
+      if (p.hand.some((x) => x[1] == this.trump[1]))
         return false;
     }
 

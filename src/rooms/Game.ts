@@ -59,15 +59,11 @@ export class State extends Schema
     return value.id == client.sessionId;
   })
   @type(Player) West: Player;
-  @filter(function(client: any, key, value, root): boolean
+  @filter(function(client: any, value, root): boolean
   {
     return false;
   })
   @type(["string"]) deck: string[];
-  @filter(function(this: State, client: Client, value: State['teamBlueScore'] , root: Schema): boolean
-  {
-    return false;
-  })
   @type("number") teamBlueScore: number = 0;
   @type("number") teamRedScore: number = 0;
 
@@ -77,6 +73,7 @@ export class State extends Schema
   @type("number") contract: number = -1;
   @type("number") fold: number = 0;
   @type("number") lock: number = 0;
+  // @ts-ignore
   @type([Object]) chosen: Object[] = [];
 
   onChange(callback: () => void): () => void {

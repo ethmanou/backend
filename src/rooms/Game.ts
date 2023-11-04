@@ -74,7 +74,7 @@ export class State extends Schema
   @type("number") fold: number = 0;
   @type("number") lock: number = 0;
   // @ts-ignore
-  @type([Object]) chosen: Object[] = [];
+  @type([any]) chosen: any[] = [];
 
   onChange(callback: () => void): () => void {
     return super.onChange(callback);
@@ -312,8 +312,6 @@ export class Game extends Room<State>
         }
         else if (this.state.turn === this.state.dealer)
           this.state.reset();
-        else
-          this.state.turn = this.state.next(this.state.turn);
       }
       else
       {

@@ -110,14 +110,14 @@ export class State extends Schema
   }
 
   shuffle(array: Array<string> = [
-    "10H", "10D", "10C", "10S",
-    "7H", "7D", "7C", "7S",
-    "8H", "8D", "8C", "8S",
-    "9H", "9D", "9C", "9S",
-    "JH", "JD", "JC", "JS",
-    "QH", "QD", "QC", "QS",
-    "KH", "KD", "KC", "KS",
-    "AH", "AD", "AC", "AS"])
+    "10H", "10T", "10C", "10P",
+    "7H", "7T", "7C", "7P",
+    "8H", "8T", "8C", "8P",
+    "9H", "9T", "9C", "9P",
+    "JH", "JT", "JC", "JP",
+    "QH", "QT", "QC", "QP",
+    "KH", "KT", "KC", "KP",
+    "AH", "AT", "AC", "AP"])
   {
     for (let i = array.length - 1; i > 0; i--)
     {

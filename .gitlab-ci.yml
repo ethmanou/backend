@@ -27,8 +27,8 @@ deploy:
     - echo "$KEY"
     - echo "$KEY" | base64 --decode > key.pem
     - chmod 600 key.pem
-    - ssh -i key.pm admin@13.48.138.37 "cd backend && sudo git pull" # SSH into your server and update the app
-    - ssh -i key.pm admin@13.48.138.37 "cd backend && sudo npm install && sudo npm run build && sudo pm2 stop all && sudo pm2 start build/index.js && sudo pm2 save" # Run necessary commands on the server
+    - ssh -i key.pem admin@13.48.138.37 "cd backend && sudo git pull" # SSH into your server and update the app
+    - ssh -i key.pem admin@13.48.138.37 "cd backend && sudo npm install && sudo npm run build && sudo pm2 stop all && sudo pm2 start build/index.js && sudo pm2 save" # Run necessary commands on the server
   only:
     - master # Deploy only when changes are pushed to the master branch
 

@@ -1,8 +1,8 @@
 stages:
-  #- lint
-  #- build
-  #- deploy
   - debug
+  - lint
+  - build
+  - deploy
 before_script:
   - apt-get update
   - apt-get -y install npm nodejs

@@ -3,10 +3,17 @@ stages:
   - lint
   - build
   - deploy
+  -
 before_script:
   - apt-get update
   - apt-get -y install npm nodejs
   - npm install # Instnall dependencies before running the jobs
+
+variables:
+  AWS_ACCESS_KEY_ID: "LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFBQUFBQkc1dmJtVUFBQUFFYm05dVpRQUFBQUFBQUFBQkFBQUFNd0FBQUF0egpjMmd0WldReU5UVXhPUUFBQUNCTlFMbE5hcDZaRWUwaEdzTUwwWjROVlk4Q0QyQktONDFmbnhQS3cyV0Mxd0FBCkFJam51L29tNTd2NkpnQUFBQXR6YzJndFpXUXlOVFV4T1FBQUFDQk5RTGxOYXA2WkVlMGhHc01MMFo0TlZZOEMKRDJCS040MWZueFBLdzJXQzF3QUFBRUF3VVFJQkFUQUZCZ01yWlhBRUlnUWdISlJxbDB2ekJqcXBBTHpueHVWbwpCVTFBdVUxcW5wa1I3U0Vhd3d2Um5nMVZqd0lQWUVvM2pWK2ZFOHJEWllMWEFBQUFBQUVDQXdRRgotLS0tLUVORCBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0K"
+    protected: true
+    branches:
+      - master
 
 eslint:
   stage: lint

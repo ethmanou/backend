@@ -1,8 +1,8 @@
 stages:
-  - lint
-  - build
-  - deploy
-
+  #- lint
+  #- build
+  #- deploy
+  - debug
 before_script:
   - apt-get update
   - apt-get -y install npm nodejs
@@ -28,3 +28,8 @@ deploy:
     - ssh -i key.pem admin@13.48.138.37 "cd backend && npm install && npm run build && pm2 stop all && pm2 start build/index.js && pm2 save" # Run necessary commands on the server
   only:
     - master # Deploy only when changes are pushed to the master branch
+
+debug:
+  stage: debug
+  script:
+    - echo "$AWS_ACCESS_KEY_ID"

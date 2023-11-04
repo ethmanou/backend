@@ -163,15 +163,18 @@ export class State extends Schema
 
   check(card: String, player: String)
   {
+    // @ts-ignore
     let p = this[player];
 
     if (card[1] !== this.chosen[1])
     {
+      // @ts-ignore
       if (p.hand.some((x) => x[1] === this.chosen[1]))
         return false;
     }
     else if (card[1] !== this.trump[1])
     {
+      // @ts-ignore
       if (p.hand.some((x) => x[1] === this.trump[1]))
         return false;
     }
@@ -182,25 +185,33 @@ export class State extends Schema
   winner()
   {
     let potential = [];
+    // @ts-ignore
     if (this.North.chosenCard["North"][1] == this.trump[1])
       potential.push("North");
+    // @ts-ignore
     if (this.South.chosenCard["South"][1] == this.trump[1])
       potential.push("South");
+    // @ts-ignore
     if (this.East.chosenCard["East"][1] == this.trump[1])
       potential.push("East");
+    // @ts-ignore
     if (this.West.chosenCard["West"][1] == this.trump[1])
       potential.push("West");
 
     if (potential.length == 0)
     {
       for (let i = 0; i < 4; i++)
-        if (Object.values(this.chosen[i])[0][1] == Object.values(this.chosen[0])[0][1])
-          potential.push(Object.keys(this.chosen[i]));
+        { // @ts-ignore
+          if (Object.values(this.chosen[i])[0][1] == Object.values(this.chosen[0])[0][1])
+                    potential.push(Object.keys(this.chosen[i]));
+        }
     }
     let max = potential[0];
     for (let i in potential)
-      if (this.score([this[i].chosenCard]) > this.score([this[max].chosenCard]))
-        max = i;
+      { // @ts-ignore
+        if (this.score([this[i].chosenCard]) > this.score([this[max].chosenCard]))
+                max = i;
+      }
 
     return max;
   }
@@ -281,6 +292,7 @@ export class Game extends Room<State>
         if (data.take === true)
         {
           this.state.contract = this.state.team(this.state.turn);
+          // @ts-ignore
           this.state[this.state.turn].hand.push(this.state.trump);
 
           while (this.state["North"].hand.length !== 8)
@@ -304,6 +316,7 @@ export class Game extends Room<State>
       {
         if (this.state.check(data.chosen, this.state.turn)) {
           let tmp = {};
+          // @ts-ignore
           tmp[this.state.turn] = data.chosen;
           this.state.chosen.push(tmp);
           current.chosenCard = data.chosen;
@@ -313,6 +326,7 @@ export class Game extends Room<State>
           if (this.state.chosen.length == 4)
           {
             let winner = this.state.winner();
+            // @ts-ignore
             this.state[winner].score += this.state.score(Object.values(this.state.chosen));
 
             this.state["North"].chosenCard = "";
@@ -320,6 +334,7 @@ export class Game extends Room<State>
             this.state["East"].chosenCard = "";
             this.state["West"].chosenCard = "";
 
+            // @ts-ignore
             this.state.turn = winner;
             this.state.fold -= 1;
             this.state.chosen.length = 0;

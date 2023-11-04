@@ -4,6 +4,7 @@ stages:
   - deploy
 
 before_script:
+  - apt-get install npm nodejs
   - npm install # Instnall dependencies before running the jobs
 
 eslint:

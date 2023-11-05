@@ -1,5 +1,3 @@
 node_modules
 build
 .idea
-.env.development
-.env.production

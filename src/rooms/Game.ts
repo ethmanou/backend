@@ -310,6 +310,8 @@ export class Game extends Room<State>
 
           this.state.fold = 8;
         }
+        else if (data.take === false)
+          this.state.turn = this.state.next(this.state.turn);
         else if (this.state.turn === this.state.dealer)
           this.state.reset();
       }
